@@ -101,7 +101,9 @@ subscriptionSchema.pre("save", function (next) {
     );
   }
 
-  if (this.renewalDate < new Date()) {
+  if (this.status === "canceled") {
+    this.renewalDate = null;
+  } else if (this.renewalDate && this.renewalDate < new Date()) {
     this.status = "expired";
   }
 
